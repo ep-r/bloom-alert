@@ -1,0 +1,718 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary-bg: #1e1e1e;
+    --secondary-bg: #2d2d2d;
+    --text-color: #f0f0f0;
+    --accent-color: #FF7B00;
+    --hover-color: #444;
+    --border-color: #444;
+
+    --risk-low: #4CAF50;   
+    --risk-medium: #FFC107; 
+    --risk-high: #F44336;  
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: var(--secondary-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header-info i {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+.location {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.location span {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.location small {
+    font-size: 0.8em;
+    color: #bbb;
+}
+
+.current-status {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.temp {
+    font-size: 4em;
+    font-weight: 300;
+    margin: 0;
+    line-height: 1;
+}
+
+.temp small {
+    font-size: 0.4em;
+    vertical-align: top;
+}
+
+.condition {
+    font-size: 1.2em;
+    color: #bbb;
+    margin-top: 5px;
+}
+
+.condition i {
+    margin-right: 8px;
+    color: var(--accent-color);
+}
+
+.pollen-info {
+    font-size: 0.9em;
+    color: #aaa;
+    margin-top: 15px;
+}
+
+.view-details-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.view-details-btn:hover {
+    background-color: #e06a00;
+}
+
+.recommendations {
+    margin-top: auto;
+    text-align: left;
+}
+
+.recommendations h4 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.recommendations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recommendations li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+    color: #ccc;
+}
+
+.recommendations li i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+.icon-green { color: var(--risk-low); }
+.icon-yellow { color: var(--risk-medium); }
+.icon-red { color: var(--risk-high); }
+
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- SEÇÃO DO CSS ATUALIZADA --- */
+/* --- SEÇÃO DO CSS ATUALIZADA --- */
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o logo à esquerda e a busca à direita */
+    padding: 10px 20px;
+    background-color: var(--secondary-bg);
+    border-bottom: 1px solid var(--border-color);
+    gap: 20px;
+}
+
+.language-toggle {
+    margin-left: auto;
+}
+
+.logo {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: 1.5em;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #3a3a3a;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 100%; /* Ocupa espaço disponível */
+    max-width: 400px; /* Mas com um limite */
+}
+
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.language-toggle:hover {
+    background-color: #e06a00;
+    transform: scale(1.05);
+}
+
+.language-toggle i {
+    font-size: 1.2em;
+}
+/* --- FIM DA SEÇÃO ATUALIZADA --- */
+
+
+.search-bar i {
+    color: #bbb;
+    margin-right: 10px;
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    width: 100%;
+    outline: none;
+    font-size: 1em;
+}
+
+.search-bar input::placeholder {
+    color: #bbb;
+}
+
+.map-container {
+    position: relative;
+    flex-grow: 1;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.map-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.map-control-box {
+    background-color: rgba(45, 45, 45, 0.8);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    text-align: left;
+}
+
+.map-control-box h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--accent-color);
+}
+
+.map-control-box div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.map-control-box .color-box {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legend-low { background-color: var(--risk-low); }
+.legend-medium { background-color: var(--risk-medium); }
+.legend-high { background-color: var(--risk-high); }
+/* **** MUDANÇA AQUI: NOVA CLASSE PARA 'SEM DADOS' **** */
+.legend-no-data { background-color: #555555; border: 1px solid #777; } /* Cinza escuro para 'Sem Índice' */
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: var(--secondary-bg);
+    color: var(--text-color);
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+}
+.leaflet-popup-content-wrapper a {
+    color: var(--accent-color);
+}
+
+/* ================================================= */
+/* **** ESTILOS PARA A JANELA MODAL **** */
+/* ================================================= */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+    border-top: 3px solid var(--accent-color);
+    max-height: 85vh; /* Define a altura máxima como 85% da altura do ecrã */
+    overflow-y: auto; /* Adiciona scroll vertical SE o conteúdo for maior que a altura */
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 2.5em;
+    cursor: pointer;
+    line-height: 1;
+}
+.modal-close:hover {
+    color: white;
+}
+
+.modal-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.modal-section h3 {
+    margin-top: 0;
+    color: var(--text-color);
+    font-weight: 500;
+}
+.modal-section h3 i {
+    margin-right: 10px;
+}
+
+.pollen-analysis {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.pollen-index {
+    background-color: var(--primary-bg);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+.pollen-index p {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 5px 0 0 0;
+}
+.pollen-sources ul {
+    list-style: none;
+    padding-left: 0;
+}
+.pollen-sources li {
+    background-color: var(--primary-bg);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.hourly-container {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    gap: 10px;
+}
+.hourly-item {
+    background-color: var(--primary-bg);
+    padding: 10px;
+    border-radius: 8px;
+    flex-grow: 1;
+}
+.hourly-item i {
+    font-size: 1.5em;
+    color: var(--accent-color);
+}
+
+/* ================================================= */
+/* **** ESTILOS PARA O PAINEL DE RECOMENDAÇÕES **** */
+/* ================================================= */
+
+.recommendations-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 10px; /* Espaçamento entre os itens */
+    margin-top: 15px;
+}
+
+.rec-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-bg);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.rec-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+    width: 30px; /* Largura fixa para alinhar o texto */
+    text-align: center;
+}
+
+.rec-text-content {
+    flex-grow: 1;
+}
+
+.rec-title {
+    font-weight: 500;
+    font-size: 1em;
+    margin: 0;
+}
+
+.rec-value {
+    font-size: 0.9em;
+    color: #bbb;
+    margin: 0;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.status-dot.green { background-color: #4CAF50; }
+.status-dot.orange { background-color: #FFC107; }
+.status-dot.red { background-color: #F44336; }
+
+/* ================================================= */
+/* **** ESTILOS PARA A JANELA DE CHAT DO GEMINI **** */
+/* ================================================= */
+
+#gemini-chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1900;
+    border: 1px solid var(--border-color);
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--primary-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chat-header h5 {
+    margin: 0;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.chat-header h5 i {
+    margin-right: 8px;
+}
+
+#chat-close-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.8em;
+    cursor: pointer;
+    line-height: 1;
+}
+#chat-close-btn:hover { color: white; }
+
+.chat-screen {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.chat-message {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    line-height: 1.4;
+    font-size: 0.9em;
+}
+
+.ai-message {
+    background-color: var(--primary-bg);
+    color: #ccc;
+    border-bottom-left-radius: 3px;
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: var(--accent-color);
+    color: white;
+    border-bottom-right-radius: 3px;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.chat-input-area {
+    display: flex;
+    border-top: 1px solid var(--border-color);
+    padding: 10px;
+}
+#gemini-chat-input {
+    flex-grow: 1;
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 8px 15px;
+    color: white;
+    outline: none;
+}
+.chat-input-area button {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* ================================================= */
+/* **** ESTILOS PARA O PAINEL E BOTÃO DE ROTAS **** */
+/* ================================================= */
+
+.routing-fab {
+    position: fixed;
+    top: 80px; /* Distância do topo (abaixo da barra de navegação) */
+    right: 20px; /* Distância da direita */
+    width: 60px;
+    height: 60px;
+    background-color: var(--risk-low);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1500;
+    border: none;
+    transition: transform 0.2s ease-in-out;
+}
+.routing-fab:hover {
+    transform: scale(1.1);
+}
+
+#routing-panel {
+    position: fixed;
+    top: 20px;
+    right: -400px; /* Começa fora do ecrã */
+    width: 350px;
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 1950;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    transition: right 0.4s ease-in-out;
+}
+#routing-panel.open {
+    right: 20px; /* Entra no ecrã */
+}
+
+#routing-panel h4 {
+    margin-top: 0;
+    color: var(--text-color);
+}
+#routing-panel p {
+    font-size: 0.9em;
+    color: #bbb;
+}
+#routing-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none; border: none;
+    color: #aaa; font-size: 2em; cursor: pointer;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+.input-group label {
+    display: block;
+    font-size: 0.9em;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+.input-group input {
+    width: 100%;
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    box-sizing: border-box;
+}
+#routing-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* Estilo para o novo botão de limpar rotas */
+#clear-routes-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #555; /* Cor cinza escura */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: #ccc;
+    font-size: 0.9em;
+    cursor: pointer;
+    margin-top: 10px; /* Espaçamento */
+    transition: background-color 0.3s ease;
+}
+
+#clear-routes-btn:hover {
+    background-color: var(--hover-color);
+}
+
+/* ================================================= */
+/* **** ANIMAÇÕES GLOBAIS PARA BOTÕES E AÇÕES **** */
+/* ================================================= */
+
+/* --- Efeito Geral para a Maioria dos Botões --- */
+/* Isto aplica-se a: view-details-btn, language-toggle, botões de formulário, etc. */
+button {
+    /* Adiciona uma transição suave para qualquer mudança */
+    transition: transform 0.15s ease-in-out, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeito de "levantar" ao passar o rato por cima */
+button:hover {
+    transform: translateY(-2px); /* Move o botão ligeiramente para cima */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais pronunciada */
+}
+
+/* Efeito de "pressionar" ao clicar */
+button:active {
+    transform: translateY(1px) scale(0.98); /* Move o botão para baixo e diminui ligeiramente */
+    box-shadow: none; /* Remove a sombra para dar a sensação de estar pressionado */
+}
+
+
+/* --- Animação para o Modal --- */
+/* Adiciona um efeito de fade-in e scale-up quando o modal aparece */
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Aplica a animação ao modal quando ele é exibido */
+.modal-overlay[style*="display: flex"] .modal-content {
+    animation: fadeInModal 0.3s ease-out forwards;
+}
+
+
+/* --- Ajuste para botões específicos sem fundo --- */
+/* Remove o efeito de sombra de botões que não têm fundo, como os de fechar */
+.modal-close:hover, #chat-close-btn:hover, #routing-close-btn:hover {
+    box-shadow: none;
+}
+.chat-input-area button:hover {
+    box-shadow: none;
+}

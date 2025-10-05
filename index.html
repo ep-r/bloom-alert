@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloomWatch - Pollen Monitor</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="header-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="location">
+                    <span id="location-name" data-i18n="loading">Loading...</span> 
+                    <small id="location-time">--:--</small>
+                </div>
+            </div>
+            <div class="current-status">
+                <p class="temp" id="location-temp">--<small>°C</small></p>
+                <p class="condition">
+                    <i id="location-condition-icon" class="fas fa-spinner fa-spin"></i> 
+                    <span id="location-condition-text" data-i18n="loadingData">Loading data...</span>
+                </p>
+                <p class="pollen-info" id="pollen-info"></p>
+                <button class="view-details-btn" data-i18n="viewDetails">View full details</button>
+            </div>
+            <div class="recommendations">
+                <h4 data-i18n="additionalDetails">Additional Details</h4>
+                <ul id="details-list">
+                    <li><i class="fas fa-spinner fa-spin"></i> <span data-i18n="loading">Loading...</span></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <nav class="top-nav">
+                <div class="logo">BloomWatch</div>
+                <form class="search-bar" id="search-form">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" data-i18n-placeholder="searchPlaceholder">
+                </form>
+                <button id="language-toggle" class="language-toggle">
+                    <i class="fas fa-language"></i>
+                    <span id="current-lang">EN</span>
+                </button>
+            </nav>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <div class="legend map-control-box">
+                        <h4 data-i18n="pollenIndex">Pollen Index</h4>
+                        <div><span class="color-box legend-high"></span> <span data-i18n="high">High</span></div>
+                        <div><span class="color-box legend-medium"></span> <span data-i18n="medium">Medium</span></div>
+                        <div><span class="color-box legend-low"></span> <span data-i18n="low">Low</span></div>
+                        <div><span class="color-box legend-no-data"></span> <span data-i18n="noIndex">No Index</span></div> 
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="details-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <h2 id="modal-city-name"></h2>
+            <div class="modal-section">
+                <h3><i class="fas fa-pollen icon-yellow"></i> <span data-i18n="pollenAnalysis">Pollen Risk Analysis</span></h3>
+                <div class="pollen-analysis">
+                    <div class="pollen-index">
+                        <strong data-i18n="pollenIndexScale">Pollen Index (1-10)</strong>
+                        <p id="pollen-index-value">7.5</p>
+                    </div>
+                    <div class="pollen-sources">
+                        <strong data-i18n="allergenSources">Common Allergenic Sources:</strong>
+                        <ul id="pollen-sources-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3><i class="fas fa-shield-alt icon-green"></i> <span data-i18n="healthRecommendations">Health & Activity Recommendations</span></h3>
+                <div id="recommendations-grid" class="recommendations-grid-container"></div>
+            </div>
+            <div class="modal-section">
+                <h3><i class="fas fa-clock icon-yellow"></i> <span data-i18n="hourlyForecast">Forecast for the Next Hours</span></h3>
+                <div id="hourly-forecast" class="hourly-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="gemini-chat-widget" style="display: none;">
+        <div class="chat-header">
+            <h5 data-i18n="predictiveAnalysis"><i class="fas fa-magic icon-yellow"></i> Predictive Analysis</h5>
+            <button id="chat-close-btn">&times;</button>
+        </div>
+        <div id="gemini-chat-screen" class="chat-screen"></div>
+        <form id="gemini-chat-form" class="chat-input-area">
+            <input type="text" id="gemini-chat-input" data-i18n-placeholder="chatPlaceholder" autocomplete="off">
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+
+    <div id="routing-panel">
+        <button id="routing-close-btn">&times;</button>
+        <h4><i class="fas fa-route icon-green"></i> <span data-i18n="cleanAirRoute">Clean Air Route</span></h4>
+        <p data-i18n="routeDescription">Find a path with lower exposure to pollen zones.</p>
+        <form id="routing-form">
+            <div class="input-group">
+                <label for="start-point" data-i18n="origin">Origin</label>
+                <input type="text" id="start-point" data-i18n-placeholder="originPlaceholder">
+            </div>
+            <div class="input-group">
+                <label for="end-point" data-i18n="destination">Destination</label>
+                <input type="text" id="end-point" data-i18n-placeholder="destinationPlaceholder">
+            </div>
+            <button type="submit" data-i18n="findRoutes">Find Routes</button>
+            <button type="button" id="clear-routes-btn" data-i18n="clearRoutes">Clear Routes</button>
+        </form>
+        </form>
+    </div>
+
+    <button id="open-routing-btn" class="routing-fab"><i class="fas fa-route"></i></button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
