@@ -118,7 +118,7 @@ map.createPane('labels');
 map.getPane('labels').style.zIndex = 650;
 map.getPane('labels').style.pointerEvents = 'none';
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', { attribution: 'Labels: CARTO', pane: 'labels' }).addTo(map);
-const geeTileUrl = 'https://earthengine.googleapis.com/v1/projects/gen-lang-client-0615216502/maps/9c4c43b0c0899230961f311c69944671-51aaa6f78e8514487477321b6a794147/tiles/{z}/{x}/{y}';
+const geeTileUrl = 'https://earthengine.googleapis.com/v1/projects/gen-lang-client-0615216502/maps/9e2225007dcfb36631a672e69a3b0a17-8df3f8747646384b28920fed5fb08b05/tiles/{z}/{x}/{y}';
 if (geeTileUrl && geeTileUrl.startsWith('https://')) {
     geeLayer = L.tileLayer(geeTileUrl, {
         attribution: 'Dados de Risco: Google Earth Engine | NASA',
